@@ -11,7 +11,6 @@ def displayBoard(board) :
 
 def isValidMove(board, index) :
     # Checking if out of bounds
-    # print(type(index))
     if index<1 or index>9:
         return False
 
@@ -23,16 +22,24 @@ def isValidMove(board, index) :
         return True
     return False
 
+def makeMove(board, index, mark) :
+    board[index-1] = mark
 
 def checkWinner(board, mark) :
-   return ( (board[0] == mark and board[1] == mark and board[2] == mark) or
-   (board[3] == mark and board[4] == mark and board[5] == mark) or
-   (board[6] == mark and board[7] == mark and board[8] == mark) or 
-   (board[0] == mark and board[3] == mark and board[6] == mark) or
-   (board[1] == mark and board[4] == mark and board[7] == mark) or
-   (board[2] == mark and board[5] == mark and board[8] == mark) or
-   (board[0] == mark and board[4] == mark and board[8] == mark) or
-   (board[2] == mark and board[4] == mark and board[6] == mark) )
+    # check row
+    for i in range(0, len(board), 3) :
+        if(board[i] == mark and board[i+1] == mark and board[i+2] == mark) :
+            return True
+
+    # check col
+    for i in range(0, len(board), 3) :
+        j = i//3
+        if(board[j] == mark and board[j+3] == mark and board[j+6] == mark) :
+            return True
+
+    # check diagonal
+    return ((board[0] == mark and board[4] == mark and board[8] == mark) or
+   (board[2] == mark and board[4] == mark and board[6] == mark))
 
 
 # Playing the game
@@ -58,7 +65,7 @@ while count <= 9 and winner == False:
     while isValidMove(board, gameIndex) == False:
         gameIndex = int(input("\nIt's your turn " + users[userIndex] + ". Select an index to place your move:\n"))
 
-    board[gameIndex-1] = marker[userIndex]
+    makeMove(board, gameIndex, marker[userIndex])
 
     if checkWinner(board, marker[userIndex]) == True :
         winner = True
