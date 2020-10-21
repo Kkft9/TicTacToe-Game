@@ -43,43 +43,46 @@ def checkWinner(board, mark) :
 
 
 # Playing the game
-print('\nWelcome to TicTacToe!')
+def main() :
+    print('\nWelcome to TicTacToe!')
 
-player1 = input("\nEnter first player's name?\n")
-player2 = input("\nEnter second player's name?\n")
+    player1 = input("\nEnter first player's name?\n")
+    player2 = input("\nEnter second player's name?\n")
 
-print("\nHello " + player1 + ' and ' + player2 + '!')
+    print("\nHello " + player1 + ' and ' + player2 + '!')
 
-board = [' '] * 9
-users = [player1, player2]
-marker = ['X', 'O']
-userIndex = 0
-count = 1
-winner = False
+    board = [' '] * 9
+    users = [player1, player2]
+    marker = ['X', 'O']
+    userIndex = 0
+    count = 1
+    winner = False
 
-while count <= 9 and winner == False:
-    print('\n')
-    displayBoard(board)
-    gameIndex = 0
+    while count <= 9 and winner == False:
+        print('\n')
+        displayBoard(board)
+        gameIndex = 0
 
-    while isValidMove(board, gameIndex) == False:
-        gameIndex = int(input("\nIt's your turn " + users[userIndex] + ". Select an index to place your move:\n"))
+        while isValidMove(board, gameIndex) == False:
+            gameIndex = int(input("\nIt's your turn " + users[userIndex] + ". Select an index to place your move:\n"))
 
-    makeMove(board, gameIndex, marker[userIndex])
+        makeMove(board, gameIndex, marker[userIndex])
 
-    if checkWinner(board, marker[userIndex]) == True :
-        winner = True
+        if checkWinner(board, marker[userIndex]) == True :
+            winner = True
+            print('\n')
+            displayBoard(board)
+            print('\nGame Over!')
+            print('\n' + users[userIndex] + ' Won!!!')
+
+        userIndex = 1 - userIndex
+        count += 1
+
+    if count == 10 and winner == False:
         print('\n')
         displayBoard(board)
         print('\nGame Over!')
-        print('\n' + users[userIndex] + ' Won!!!')
+        print("\nIt's a Tie!!!\n")
 
-    userIndex = 1 - userIndex
-    count += 1
-
-if count == 10 and winner == False:
-    print('\n')
-    displayBoard(board)
-    print('\nGame Over!')
-    print("\nIt's a Tie!!!\n")
-
+if __name__ == '__main__':
+    main()
